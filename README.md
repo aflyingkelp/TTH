@@ -1,5 +1,17 @@
 # TTH
 
+## YouTube browsing in Watch
+
+Watch provides keyword search, topic shortcuts, region and duration filters, sorting, pagination, channel browsing from result cards, popular videos, embedded video and public playlist playback, watch later, and recently opened history. It uses YouTube's official Data API and privacy-enhanced embedded player. It does not embed the entire YouTube website, sign into YouTube accounts, or bypass network or video restrictions.
+
+Keyword search and popular-video browsing require a user-supplied YouTube Data API v3 key. Open Watch → Search setup for the instructions and key field. Create/select a Google Cloud project, enable YouTube Data API v3, and create a key restricted to the YouTube Data API and the website referrer `https://aflyingkelp.github.io/*`. This covers this account's GitHub Pages origin. For local development, explicitly allow the chosen localhost address in the key restrictions as well. Consult [Google's setup guide](https://developers.google.com/youtube/data/getting-started) and [key restriction documentation](https://docs.cloud.google.com/api-keys/docs/add-restrictions-api-keys).
+
+The key is sent directly from the browser to Google. By default it is kept in sessionStorage for the current tab; opting into Remember stores it in localStorage. Disconnect removes either copy. No key is committed to the repository or sent to the chat backend. Browser API keys are not server secrets and must be restricted. Each browser needs its own configured key; no shared site-wide search credential is installed. Google quotas apply. Requests are cached in memory for ten minutes and search is submitted explicitly rather than on each keystroke.
+
+Pasted video and public playlist links work without a key, including shorts, live URLs, and timestamps. Public oEmbed metadata is requested for pasted videos when available. Saved items and the last 100 opened items stay in localStorage. Clearing history removes it from this browser. This history records opening a player, not completed viewing. Leaving Watch closes the player. Remote thumbnails, searches, metadata, and playback contact Google/YouTube.
+
+Verification: URL parsing and invalid-host checks, playlist/timestamp construction, search filters and pagination, result normalization, and duration formatting pass automated checks. The interface was checked with a real official YouTube embed, Watch Later, History, and the missing-key setup state. Live Data API search still needs the user's restricted API key and was not verified with an active key.
+
 ## Global chat and kelps games uwu
 
 The Global chat tab is a shared public room, separate from peer chat. It reads the latest 80 messages from the last 24 hours, refreshing every five seconds while open. Messages remain stored in Supabase beyond that display window and can be accessed by the backend administrator. This room is not end-to-end encrypted.
